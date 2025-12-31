@@ -12,6 +12,8 @@ cp .env.example .env
 docker compose up -d
 ```
 
+> **Note**: This setup uses a locally built image (`rustfs/rustfs:local`) with FTPS/SFTP support from the latest `main` branch. See [docs/LOCAL_BUILD.md](docs/LOCAL_BUILD.md) for build instructions.
+
 ## Access
 
 | Service | URL | Credentials |
@@ -29,6 +31,7 @@ All configuration is managed via `.env`. Copy `.env.example` to get started.
 
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `RUSTFS_IMAGE` | `rustfs/rustfs:local` | Docker image to use |
 | `RUSTFS_ACCESS_KEY` | `rustfsadmin` | S3 access key |
 | `RUSTFS_SECRET_KEY` | `rustfsadmin` | S3 secret key |
 | `RUSTFS_S3_PORT` | `9000` | S3 API port |
@@ -82,6 +85,8 @@ cat ~/.ssh/id_ed25519.pub > sftp/authorized_keys
 ├── .env                 # Local configuration (git-ignored)
 ├── .env.example         # Configuration template
 ├── docker-compose.yml   # Service definitions
+├── docs/
+│   └── LOCAL_BUILD.md   # Build instructions for macOS
 ├── tls/                 # TLS certificates for FTPS
 │   ├── cert.pem
 │   └── key.pem
@@ -108,6 +113,23 @@ docker compose down && docker compose up -d
 # Check health
 curl http://localhost:9000/health
 curl http://localhost:9001/rustfs/console/health
+```
+
+## Building from Source
+
+FTPS/SFTP support requires building from the latest `main` branch. See [docs/LOCAL_BUILD.md](docs/LOCAL_BUILD.md) for detailed instructions.
+
+Quick build (Apple Silicon):
+
+```bash
+git clone https://github.com/rustfs/rustfs.git rustfs-src
+cd rustfs-src
+docker buildx build \
+  --platform linux/arm64 \
+  --build-arg TARGETPLATFORM=linux/arm64 \
+  -t rustfs/rustfs:local \
+  --load \
+  -f Dockerfile.source .
 ```
 
 ## License

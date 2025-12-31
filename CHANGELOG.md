@@ -11,3 +11,7 @@
 - Health checks for S3 API and console endpoints
 - README with setup and configuration instructions
 - `.gitignore` for secrets, keys, and runtime data
+- `docs/LOCAL_BUILD.md` with macOS build instructions and troubleshooting
+
+### Changed
+- Default image changed to `rustfs/rustfs:local` (built from source with FTPS/SFTP)
