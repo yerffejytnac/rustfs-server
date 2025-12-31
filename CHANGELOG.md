@@ -10,3 +10,4 @@
 - Volume permission helper service for non-root container
 - Health checks for S3 API and console endpoints
 - README with setup and configuration instructions
+- `.gitignore` for secrets, keys, and runtime data
