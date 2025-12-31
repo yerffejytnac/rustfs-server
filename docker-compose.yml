@@ -8,6 +8,9 @@ services:
     ports:
       - "${RUSTFS_S3_PORT:-9000}:9000"
       - "${RUSTFS_CONSOLE_PORT:-9001}:9001"
+      - "${RUSTFS_FTPS_PORT:-8021}:8021"
+      - "${RUSTFS_SFTP_PORT:-8022}:8022"
+      - "40000-41000:40000-41000"
     environment:
       - RUSTFS_VOLUMES=${RUSTFS_VOLUMES}
       - RUSTFS_ADDRESS=${RUSTFS_ADDRESS}
@@ -22,12 +25,25 @@ services:
       - RUSTFS_TLS_PATH=${RUSTFS_TLS_PATH}
       - RUSTFS_OBJECT_CACHE_ENABLE=${RUSTFS_OBJECT_CACHE_ENABLE}
       - RUSTFS_OBJECT_CACHE_TTL_SECS=${RUSTFS_OBJECT_CACHE_TTL_SECS}
+      # FTPS Configuration
+      - RUSTFS_FTPS_ENABLE=${RUSTFS_FTPS_ENABLE}
+      - RUSTFS_FTPS_ADDRESS=${RUSTFS_FTPS_ADDRESS}
+      - RUSTFS_FTPS_CERTS_FILE=${RUSTFS_FTPS_CERTS_FILE}
+      - RUSTFS_FTPS_KEY_FILE=${RUSTFS_FTPS_KEY_FILE}
+      - RUSTFS_FTPS_PASSIVE_PORTS=${RUSTFS_FTPS_PASSIVE_PORTS}
+      # SFTP Configuration
+      - RUSTFS_SFTP_ENABLE=${RUSTFS_SFTP_ENABLE}
+      - RUSTFS_SFTP_ADDRESS=${RUSTFS_SFTP_ADDRESS}
+      - RUSTFS_SFTP_HOST_KEY=${RUSTFS_SFTP_HOST_KEY}
+      - RUSTFS_SFTP_AUTHORIZED_KEYS=${RUSTFS_SFTP_AUTHORIZED_KEYS}
     volumes:
       - rustfs_data_0:/data/rustfs0
       - rustfs_data_1:/data/rustfs1
       - rustfs_data_2:/data/rustfs2
       - rustfs_data_3:/data/rustfs3
       - logs:/app/logs
+      - ./tls:/opt/tls:ro
+      - ./sftp:/opt/sftp:ro
     networks:
       - rustfs-network
     restart: unless-stopped
