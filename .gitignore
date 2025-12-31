@@ -1,0 +1,16 @@
+# Environment (contains secrets)
+.env
+
+# TLS certificates and keys
+tls/*.pem
+tls/*.key
+tls/*.crt
+
+# SFTP keys
+sftp/host_key
+sftp/host_key.pub
+sftp/authorized_keys
+
+# Data and logs (runtime)
+data/
+logs/
