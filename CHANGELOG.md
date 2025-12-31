@@ -12,6 +12,8 @@
 - README with setup and configuration instructions
 - `.gitignore` for secrets, keys, and runtime data
 - `docs/LOCAL_BUILD.md` with macOS build instructions and troubleshooting
+- `docs/FTP.md` and `docs/FUJI_FTP_SETUP.md` added
 
 ### Changed
 - Default image changed to `rustfs/rustfs:local` (built from source with FTPS/SFTP)
+- Updates `docs/LOCAL_BUILD.md` for building UI with image
