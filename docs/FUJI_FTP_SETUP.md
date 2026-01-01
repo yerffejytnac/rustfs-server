@@ -57,7 +57,7 @@ Instead of using the admin credentials, create a separate user for the camera:
 ```bash
 # Using AWS CLI (with S3 endpoint)
 aws --endpoint-url http://localhost:9000 \
-    s3 mb s3://camera-uploads
+    s3 mb s3://uploads
 
 # Or via console at http://localhost:9001
 ```
@@ -85,9 +85,13 @@ Navigate to **NETWORK/USB SETTING** → **FTP TRANSFER SETTINGS** and enter:
 | **Port Number** | `8021` |
 | **User Name** | `FUJIFILM` |
 | **Password** | `12345678` |
-| **Destination Folder** | `/camera-uploads` (or your bucket path) |
 | **Passive Mode** | `ON` |
-| **Encryption** | `Explicit TLS` (try this first) |
+| **Specify Target Folder** | `SPECIFY FOLDER` |
+| **Root Folder** | Leave blank |
+| **Specify Folder** | `/uploads` (your bucket name) |
+| **Proxy Server** | `OFF` |
+| **Encryption** | `Explicit TLS` |
+| **Trust w/o Root Cert** | `YES` |
 
 ### Step 2.3: Certificate Validation
 
@@ -151,7 +155,7 @@ curl -k --ftp-ssl -u FUJIFILM:12345678 \
 ```bash
 # Check uploaded files via S3 API
 aws --endpoint-url http://localhost:9000 \
-    s3 ls s3://camera-uploads/ --recursive
+    s3 ls s3://uploads/ --recursive
 
 # Or check via console UI
 open http://localhost:9001
